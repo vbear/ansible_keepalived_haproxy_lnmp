@@ -1,0 +1,9 @@
+---
+# defaults file for keepalived
+MASTERHOST: MASTER
+priority_m: 300
+vip_ip: 172.20.11.111
+SLAVEHOST: BACKUP
+priority_s: 250
+MASTER_IP: 172.20.11.22
+SLAVE_IP: 172.20.11.23

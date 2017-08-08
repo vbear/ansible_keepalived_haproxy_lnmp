@@ -1,0 +1,17 @@
+---
+- hosts:lb
+  remote_user:root
+  roles:
+  - haproxy
+
+- hosts: www
+  remote_users:root
+  roles:
+  - nginx
+  - php
+  - wordpress
+
+- hosts: db
+ roles:
+  - mysql
+  - mysqladmin

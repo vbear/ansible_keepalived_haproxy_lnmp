@@ -1,0 +1,10 @@
+---
+# tasks file for haproxy
+- name: rsync keepalived.confto /etc/keepalived
+  template: src=keepalived.conf.j2 dest=/etc/keepalived/keepalived.conf
+  notify:
+  - restart keepalived
+  tags: conf
+- name: start keepalived
+  service: name=keepalived state=started
+  tags: conf

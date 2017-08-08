@@ -1,0 +1,10 @@
+---
+- name: copy wordpress template
+  template:
+   src: wp-config.php.j2
+   dest: "{{ wp_docroot }}/{{ wp_sitedir }}/wp-config.php"
+   mode: 0644
+
+
+- name: create mysql wordpress user
+  mysql_user: name=wordpress password=wordpress priv=wordpress.*:ALL state=present host={{ masteruser }}

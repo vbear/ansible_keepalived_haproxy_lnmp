@@ -1,0 +1,21 @@
+---
+# tasks file for php5
+- name: install phpd
+  yum: name={{item}} state=present
+  with_items:
+      - php
+      - php-mysql
+#      - php-fpm
+
+- name: copy php-fpm.rpm to nginx
+  copy: src=php-fpm-5.3.3-38.el6.x86_64.rpm dest=/root/
+
+
+- name: install php-fpm rpm
+  yum: name=/root/php-fpm-5.3.3-38.el6.x86_64.rpm state=present  
+
+- name: copy test.php to nginx
+  template: src=test.php.j2 dest=/opt/nginx/html/test.php
+
+- name: start php-fpm service
+  service: name=php-fpm state=started enabled=yes

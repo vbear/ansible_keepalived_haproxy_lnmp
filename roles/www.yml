@@ -1,0 +1,6 @@
+---
+- hosts: www
+  roles:
+   - nginx
+   - wordpress
+   - php5

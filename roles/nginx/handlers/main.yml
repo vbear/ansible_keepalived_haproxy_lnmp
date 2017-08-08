@@ -1,0 +1,4 @@
+---
+# handlers file for nginx
+- name: reload nginxd
+  shell: /opt/nginx/sbin/nginx -s reload

@@ -1,0 +1,21 @@
+[mysqld]
+datadir={{datadir}}
+socket={{socket}}
+user={{user}}
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+log-bin=mysql-bin
+
+{% if ansible_all_ipv4_addresses[0] == masterhost %}
+server-id=100
+{% elif  ansible_all_ipv4_addresses[0] == slavehost %}
+server-id=99
+relay_log = mysql-slave-relay-bin
+read_only = 1
+{% endif %}
+
+
+[mysqld_safe]
+log-error={{logerror}}
+pid-file=/var/run/mysqld/mysqld.pid

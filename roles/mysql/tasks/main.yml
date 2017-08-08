@@ -1,0 +1,6 @@
+---
+# tasks file for mysql
+- include: install.yml
+- include: configure.yml
+- include: cluster.yml
+  when: ansible_all_ipv4_addresses[0] == "{{ slavehost }}"

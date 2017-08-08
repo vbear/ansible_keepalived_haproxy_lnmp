@@ -1,0 +1,6 @@
+---
+- name: create mysql database wordpress
+  mysql_db: name=wordpress state=present
+
+- name: create mysql wordpress user
+  mysql_user: name=wordpress password=wordpress priv=wordpress.*:ALL state=present host=172.20.11.%

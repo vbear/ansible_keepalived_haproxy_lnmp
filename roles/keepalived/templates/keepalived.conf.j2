@@ -1,0 +1,35 @@
+global_defs {
+   notification_email {
+        vbeard@qq.com  #  修改成可用的收件人地址，可为多个
+   }
+}
+vrrp_script chk_http_port {
+     script "/etc/keepalived/check_haproxy.sh"   #  修改成Haproxy监控脚本路径
+     interval 2   #  检查间隔时间，单位：秒
+}
+
+vrrp_instance VI_1 {  
+{% if ansible_all_ipv4_addresses[0] == MASTER_IP %}
+state {{ MASTERHOST }}
+priority {{ priority_m }}
+{% elif  ansible_all_ipv4_addresses[0] == SLAVE_IP %}
+state {{ SLAVEHOST }}
+priority {{ priority_s }}
+{% endif %}
+#    state MASTER   #指定A节点为主节点 备用节点上设置为BACKUP即可  
+    interface eth2   #绑定虚拟IP的网络接口  
+    virtual_router_id 51  #VRRP组名，两个节点的设置必须一样，以指明各个节点属于同一VRRP组  
+#    priority 100   #主节点的优先级（1-254之间），备用节点必须比主节点优先级低  
+    advert_int 1   #组播信息发送间隔，两个节点设置必须一样  
+    authentication {   #设置验证信息，两个节点必须一致  
+        auth_type PASS  
+        auth_pass 1111  
+    }  
+
+    track_script {
+             chk_http_port
+    }
+    virtual_ipaddress {   #指定虚拟IP, 两个节点设置必须一样  
+        {{ vip_ip }}
+    }  
+}  

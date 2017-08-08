@@ -1,0 +1,11 @@
+---
+# tasks file for keepalived
+- name: install package
+  yum: name={{ item }} state=present
+  with_items:
+    - openssl-devel
+    - libnl-devel
+    - libnfnetlink-devel
+- include: install.yml
+- include: configure.yml
+                                                                                                                                                                    

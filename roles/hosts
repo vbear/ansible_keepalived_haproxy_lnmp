@@ -1,0 +1,12 @@
+[lb]
+172.20.11.22 ansible_ssh_user=root ansible_ssh_pass=1234567
+172.20.11.23 ansible_ssh_user=root ansible_ssh_pass=1234567
+
+[www]
+172.20.11.25 ansible_ssh_user=root ansible_ssh_pass=1234567
+172.20.11.26 ansible_ssh_user=root ansible_ssh_pass=1234567
+172.20.11.27 ansible_ssh_user=root ansible_ssh_pass=1234567
+
+[db]
+172.20.11.18 ansible_ssh_user=root ansible_ssh_pass=1234567
+172.20.11.19 ansible_ssh_user=root ansible_ssh_pass=1234567

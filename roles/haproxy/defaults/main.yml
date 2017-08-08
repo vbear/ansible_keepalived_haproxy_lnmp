@@ -1,0 +1,5 @@
+---
+# defaults file for haproxy
+www1: 172.20.11.25
+www2: 172.20.11.26
+www3: 172.20.11.27

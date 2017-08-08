@@ -1,0 +1,20 @@
+---
+# tasks file for keepalived
+- name: copy keepalived.tar to LB server
+  copy: src=keepalived-1.3.5.tar.gz dest=/root/
+
+- name: adduser keepalived
+  user: name=keepalived
+
+- name: check keepalived install evn
+  shell: test -f /etc/keepalived/keepalived.conf
+  register: rcv1
+  ignore_errors: yes
+  #if keepalived is installed.so skip it.
+ 
+#- name: debug
+#  debug: msg="{{rcv1}} xxx"
+
+- name: install keepalived
+  script: keepalived_install.sh
+  when: '{{rcv1.rc}} == "1"'

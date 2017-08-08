@@ -1,0 +1,27 @@
+---
+
+- name: export database from master mysql
+  shell: mysqldump -uwordpress -h{{ masterhost }} -pwordpress  wordpress>/root/wordpress.sql 
+
+- name: import slave database from wordpress.sql
+  shell: mysql -uwordpress -h{{ slavehost }} -pwordpress  wordpress</root/wordpress.sql 
+
+- name: get master status
+  mysql_replication: mode=getmaster login_host={{ masterhost }} login_user={{ repluser }} login_password={{ replpass }}
+  register: master
+
+- name: configure replication on slave
+  mysql_replication:
+      mode=changemaster
+      master_host={{ masterhost }}
+      master_user={{ repluser }}
+      master_password={{ replpass }}
+      master_log_file={{ master.File }}
+      master_log_pos={{ master.Position }}
+
+
+
+
+
+- name: start slave
+  mysql_replication: mode=startslave 

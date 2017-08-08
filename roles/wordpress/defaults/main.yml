@@ -1,0 +1,15 @@
+---
+# defaults file for wordpress
+wp_docroot: /opt/nginx/html
+wp_srcdir: /root
+wp_sitedir: wordpress
+wp_user: root
+wp_group: root
+
+
+#mysql
+DBNAME: wordpress
+DBUSER: wordpress
+DBPASSWORD: wordpress
+DBHOST: 172.20.11.18
+

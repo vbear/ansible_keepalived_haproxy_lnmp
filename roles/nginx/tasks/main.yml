@@ -1,0 +1,22 @@
+---
+# tasks file for nginx
+- name: install nginx {{ item }}web server
+  yum: name={{ item }} state=present
+  with_items:
+  - zlib-devel
+  - pcre-devel
+
+- name: copy nginx.tar.gz to /root/
+  copy: src=nginx-1.8.1.tar.gz dest=/root
+
+- name: create nginx user
+  user: name=nginx
+
+- name: install nginx aservice
+  shell: tar -xzvf nginx-1.8.1.tar.gz;cd nginx-1.8.1;./configure --prefix=/opt/nginx –enable-fpm;make;make install
+- name: copy nginx template
+  template: src=nginx.conf dest=/opt/nginx/conf/ 
+  notify:
+    - reload nginxd
+- name: start nginx
+  shell: /opt/nginx/sbin/nginx -s reload

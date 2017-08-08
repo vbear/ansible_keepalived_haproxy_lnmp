@@ -1,0 +1,16 @@
+---
+# tasks file for mysql
+- name: install mysqld
+  yum: name={{ item }} state=present
+  with_items:
+    - mysql-server
+    - MySQL-python
+- name: mysql  update configure file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify:
+  - restart mysqld
+- name: service mysqld start
+  service: name=mysqld enabled=no state=started
+- name: create master mysql repl user
+  mysql_user: name={{ repluser }}  password={{ replpass }}  priv="*.*:super,replication slave,replication client" state=present host={{ slavehost }}
+  when: ansible_all_ipv4_addresses[0] == "{{ masterhost }}"
