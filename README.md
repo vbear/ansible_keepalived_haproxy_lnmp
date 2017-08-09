@@ -129,5 +129,7 @@ priority {{ priority_s }}
 
 - name: start slave
   mysql_replication: mode=startslave 
+  
+  
 
   
